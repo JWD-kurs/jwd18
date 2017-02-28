@@ -16,10 +16,10 @@ import jwd.wafepa.service.ActivityService;
 @Transactional
 public class JpaActivityService 
 	implements ActivityService {
-
+	
 	@Autowired
 	private ActivityRepository activityRepository;
-	
+
 	@Override
 	public Activity findOne(Long id) {
 		return activityRepository.findOne(id);
@@ -44,29 +44,27 @@ public class JpaActivityService
 	public Activity delete(Long id) {
 		Activity activity = activityRepository.findOne(id);
 		if(activity == null){
-			throw new IllegalStateException("Tried to remove"
-					+ "non-existant activity.");
+			throw new IllegalArgumentException("Tried to delete"
+					+ "non-existant activity");
 		}
-		activityRepository.delete(id);
-		
+		activityRepository.delete(activity);
 		return activity;
 	}
 
 	@Override
 	public void delete(List<Long> ids) {
 		for(Long id : ids){
-			activityRepository.delete(id);
+			this.delete(id);
 		}
 	}
 
 	@Override
 	public List<Activity> findByName(String name) {
-		
-		return activityRepository.findByName(name);
+		return activityRepository.findByNameLike("%" + name + "%");
 	}
 	
-//	@PostConstruct
-//	public void 何でも(){
+	//@PostConstruct
+//	public void БилоШта(){
 //		save(new Activity("Swimming"));
 //		save(new Activity("Running"));
 //	}

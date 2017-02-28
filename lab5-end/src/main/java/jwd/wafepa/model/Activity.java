@@ -17,11 +17,13 @@ public class Activity {
 	
 	@Id
 	@GeneratedValue
-	@Column
+	@Column(name="id")
 	private Long id;
-	@Column
+	
+	@Column(name="name")
 	private String name;
-	@Column(name="admComment")
+	
+	@Column(name="admin_comment")
 	private String adminComment="test";
 	
 

@@ -10,8 +10,11 @@ import javax.annotation.PostConstruct;
 import jwd.wafepa.model.Activity;
 import jwd.wafepa.service.ActivityService;
 
+import org.springframework.stereotype.Service;
+
 //@Service
 public class InMemoryActivityService implements ActivityService {
+
 	private Map<Long, Activity> activities = new HashMap<>();
 	private long nextId = 1L;
 

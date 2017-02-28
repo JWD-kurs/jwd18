@@ -1,18 +1,39 @@
 package jwd.wafepa.model;
 
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="tblUser")
 public class User {
-
+	
+	@Id
+	@GeneratedValue
+	@Column(name="id")
 	private Long id;
 	
-
+	@Column(name="email",nullable=false)
 	private String email;
 	
+	@Column(name="password",nullable=false)
 	private String password;
 	
-	private String firstname;
+	@Column(name="first_name")
+	private String firstName;
 	
-	private String lastname;
+	@Column(name="last_name")
+	private String lastName;
+	
+	@OneToMany(mappedBy="user",cascade=CascadeType.ALL)
+	private List<Address> addresses = new ArrayList<>();
 	
 	public Long getId() {
 		return id;
@@ -32,17 +53,29 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getFirstname() {
-		return firstname;
+	public String getFirstName() {
+		return firstName;
 	}
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
+	public void setFirstName(String firstname) {
+		this.firstName = firstname;
 	}
-	public String getLastname() {
-		return lastname;
+	public String getLastName() {
+		return lastName;
 	}
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setLastName(String lastname) {
+		this.lastName = lastname;
+	}
+	public List<Address> getAddresses() {
+		return addresses;
+	}
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
 	}
 	
+    public void addAddress(Address address){
+        this.addresses.add(address);
+        if(!address.getUser().equals(this)){
+            address.setUser(this);
+        }
+    }
 }
